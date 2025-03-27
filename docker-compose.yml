@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  #######################################
+  # Keycloak: Identity and access management
+  #######################################
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1.4
+    network_mode: "host"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: "admin"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+    command: ["start-dev"]
+    
+
+  #######################################
+  # Nuxt: Front Vue
+  #######################################
+  nuxt:
+    build:
+      context: ./nuxt
+      dockerfile: Dockerfile
+    working_dir: /var/www/html/nuxt
+    network_mode: "host"
+    environment:
+      NITRO_SERVER: 3000
+    volumes:
+      - ./nuxt:/var/www/html/nuxt
+      - ./nuxt/node_modules:/var/www/html/nuxt/node_modules
+    command: sh -c "npm install && npm run dev"
+
+ 
