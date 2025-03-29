@@ -1,6 +1,8 @@
 <template>
-  <v-app>
-    <NuxtPage />
-  </v-app>
+  <div>
+    <NuxtPwaAssets />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
-
