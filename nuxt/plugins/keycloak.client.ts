@@ -17,11 +17,12 @@ async function initializeKeycloak() {
     realm: 'nuxt',
     clientId: 'app',
     onLoad: 'login-required' as 'login-required',
+    redirectUri: '/login',
   };
 
-  const keycloak = new Keycloak(initOptions);
-
   try {
+    const keycloak = new Keycloak(initOptions);
+
     // Espera a inicialização ser concluída
     const authenticated = await keycloak.init({ onLoad: initOptions.onLoad });
     keycloak.authenticated = (authenticated) ? true : false
@@ -30,8 +31,8 @@ async function initializeKeycloak() {
       console.error('Usuário não autenticado!');
       window.location.reload();
     }
-
-    return keycloak;
+    
+    return keycloak
   } catch (error) {
     console.error('Erro ao inicializar Keycloak', error);
     throw new Error('Falha ao Autenticar OAuth');
